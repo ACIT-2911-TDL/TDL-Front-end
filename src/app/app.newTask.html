@@ -1,0 +1,18 @@
+<style>
+    input{
+        width:180px;
+    }
+</style>
+
+<br>
+<b>Task Name</b><br>
+<input type="text" [(ngModel)]="name"><br><br>
+<b>Description</b><br>
+<input type="text" [(ngModel)]="description"><br><br>
+<b>Deadline</b><br>
+<input type="date" [(ngModel)]="deadline"><br><br>
+<input type="submit" value="Add Item" (click)="createTask()"><br><br>
+
+
+<br>
+    {{_errorMessage}}{{_validation}}
