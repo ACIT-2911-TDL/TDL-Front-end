@@ -9,6 +9,7 @@ export class NewTaskComponent {
     name: String;
     description: String;
     deadline: Date;
+    deadline_datetime: Date;
     _http: HttpClient;
     _errorMessage: String = "";
     _validation: String;
@@ -22,7 +23,8 @@ export class NewTaskComponent {
 
     createTask() {
         let now = new Date();
-        if(this.deadline < now) {
+        this.deadline_datetime = new Date(this.deadline);
+        if(this.deadline_datetime.getTime() < now.getTime()) {
             this._errorMessage = "Invalided deadline input."
         } 
         else {
@@ -34,8 +36,8 @@ export class NewTaskComponent {
             }
             this._http.post<any>(url, newTask)
             .subscribe(data =>{
-                this._errorMessage = data.errorMessage;
-                if(this._errorMessage == "") {
+                console.log(data)
+                if(data.status == 204) {
                     this._validation = "New task has been added successfully."
                 } 
                 else {

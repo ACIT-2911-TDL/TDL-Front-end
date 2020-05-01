@@ -8,6 +8,7 @@ import { Component } from '@angular/core';
     <a routerLink="/done" routerLinkActive="active">Done</a> |
     <a routerLink="/new" routerLinkActive="active">New Task</a>
     </nav>
+    
     <!-- Where router should display a view -->
     <router-outlet></router-outlet>`
 })
