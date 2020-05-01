@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from "@angular/router";
+
 
 
 @Component({
@@ -16,7 +18,7 @@ export class NewTaskComponent {
  
 
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private router: Router) {
         this._http = http;
     }
 
@@ -27,6 +29,15 @@ export class NewTaskComponent {
         if(this.deadline_datetime.getTime() < now.getTime()) {
             this._errorMessage = "Invalided deadline input."
         } 
+        else if(this.name == "") {
+            this._errorMessage = 'Task name can not be empty.'
+        }
+        else if(this.description == "") {
+            this._errorMessage = 'Task description can not be empty.'
+        }
+        else if(!this.deadline) {
+            this._errorMessage = 'Task deadline can not be empty.'
+        }
         else {
             let url = "http://127.0.0.1:5000/newTask";
             let newTask = {
@@ -35,15 +46,15 @@ export class NewTaskComponent {
                 "deadline": this.deadline
             }
             this._http.post<any>(url, newTask)
-            .subscribe(data =>{
-                console.log(data)
-                if(data.status == 204) {
-                    this._validation = "New task has been added successfully."
-                } 
-                else {
-                    this._validation = ""
-                };
-            })
+            .subscribe(
+                (data) => {
+                    console.log(data)
+                    alert('New task successfully created.')
+                    this.router.navigateByUrl('/main');
+                },
+                error => {
+                    alert(JSON.stringify(error));
+                });
         }
 
     }

@@ -8,7 +8,8 @@ import { HttpClient } from '@angular/common/http';
 export class DoneTasksComponent {
     _doneTasksArray: Array<any>;
     _http: HttpClient;
-    _errorMessage: String = "";
+    selectedTask;
+
  
 
 
@@ -19,13 +20,16 @@ export class DoneTasksComponent {
 
 
     getDoneTasks() {
-        let url = "http://127.0.0.1:5000/Tasks/Done";
+        let url = "http://127.0.0.1:5000/doneTasks";
         this._http.get<any>(url)
         .subscribe(result => {
             this._doneTasksArray = result;
             console.log(this._doneTasksArray)
         })
+    }
 
+    onSelect(task) {
+        this.selectedTask = task;
     }
 
 }

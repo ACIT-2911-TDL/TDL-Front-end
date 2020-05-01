@@ -9,8 +9,7 @@ export class MainComponent {
     _allTasksArray: Array<any>;
     _sortedTasksArray: Array<any>;
     _http: HttpClient;
-    _errorMessage: String = "";
-    selectedTask:Object;
+    selectedTask;
  
 
 
@@ -31,20 +30,45 @@ export class MainComponent {
             }
             this._sortedTasksArray = this._allTasksArray.sort((a, b)=>  a.deadline -  b.deadline)
         })
-
-
     }
+
+    
     onSelect(task) {
         this.selectedTask = task;
     }
 
-    completeTask() {
-        
-    }
-
     deleteTask() {
+        let url = "http://127.0.0.1:5000/deleteTask";
+
+        this.http.post(url,this.selectedTask)
+            .subscribe(
+                (data) => {
+                    console.log(data)
+                },
+                error => {
+                    alert(JSON.stringify(error));
+                });
+        location.reload();
 
     }
+
+    completeTask() {
+        let url = "http://127.0.0.1:5000/completeTask";
+
+        this.http.post(url,this.selectedTask)
+        .subscribe(
+            (data) => {
+                console.log(data)
+            },
+            error => {
+                alert(JSON.stringify(error));
+            });
+        location.reload();
+
+
+    }
+
+
 
 
 }
