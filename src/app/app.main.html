@@ -10,11 +10,26 @@ ul li {
 
 </style>
 
-ALL TASKS
+TODAY TASKS
 
 
 <ul>
-    <li *ngFor="let task of _sortedTasksArray" 
+    <li *ngFor="let task of _todayTasksArray" 
+    (click)="onSelect(task)">
+    {{task.name}}<br>
+    {{task.deadline | date:"yyyy-MM-LL HH:mm"}}
+    <div *ngIf="selectedTask===task">
+        <br>Description: <br>
+        {{selectedTask.description}}<br><br>
+        <input type="button" (click)="completeTask()" value="DONE">
+        <input type="button" (click)="deleteTask()" value="DELETE" style="float:right">
+    </div>
+    </li>
+</ul>
+
+OTHER TASKS
+<ul>
+    <li *ngFor="let task of _otherTasksArray" 
     (click)="onSelect(task)">
     {{task.name}}<br>
     {{task.deadline | date:"yyyy-MM-LL HH:mm"}}
