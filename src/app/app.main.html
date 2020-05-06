@@ -17,7 +17,8 @@ TODAY TASKS
     <li *ngFor="let task of _todayTasksArray" 
     (click)="onSelect(task)">
     {{task.name}}<br>
-    {{task.deadline | date:"yyyy-MM-LL HH:mm"}}
+    <!-- {{task.deadline | date:"yyyy-MM-LL HH:mm"}} -->
+    {{task.deadline | date:"medium"}}
     <div *ngIf="selectedTask===task">
         <br>Description: <br>
         {{selectedTask.description}}<br><br>
@@ -47,7 +48,7 @@ OTHER TASKS
     <li *ngFor="let task of _otherTasksArray" 
     (click)="onSelect(task)">
     {{task.name}}<br>
-    {{task.deadline | date:"yyyy-MM-LL HH:mm"}}
+    {{task.deadline | date:"medium"}}
     <div *ngIf="selectedTask===task">
         <br>Description: <br>
         {{selectedTask.description}}<br><br>

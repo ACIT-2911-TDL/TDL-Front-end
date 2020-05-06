@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { formatDate } from '@angular/common';
 
 
 @Component({
@@ -25,11 +26,11 @@ export class MainComponent {
         this.getAllTasks();
         this._today = new Date();
         this._todayTime = this.getTime(this._today)
-        this._today = this.formatDate(this._today);
+        this._today = this.formatTaskDeadline(this._today);
 
     }
 
-    formatDate(_date) {
+    formatTaskDeadline(_date) {
         let month = '' + (_date.getMonth() + 1);
         let day = '' + _date.getDate();
         let year = _date.getFullYear();
@@ -55,16 +56,18 @@ export class MainComponent {
         this._http.get<any>(url)
         .subscribe(result => {
             this._allTasksArray = result;
+
             
             // order all tasks by time
             for(let i=0; i<this._allTasksArray.length; i++){
+                this._allTasksArray[i].deadline = this._allTasksArray[i].deadline.slice(0,-3)
                 this._allTasksArray[i].deadline = new Date(this._allTasksArray[i].deadline)
             }
             this._sortedTasksArray = this._allTasksArray.sort((a, b)=>  a.deadline -  b.deadline)
-            console.log(this._allTasksArray)
+
             // divide tasks into diiferent time periods
             for(let i=0; i<this._sortedTasksArray.length; i++) {
-                this.taskDate = this.formatDate(this._sortedTasksArray[i].deadline);
+                this.taskDate = this.formatTaskDeadline(this._sortedTasksArray[i].deadline);
                 if(this.taskDate == this._today) {
                     if(this.getTime(this._sortedTasksArray[i].deadline) - this._todayTime < 0) {
                         this._overdueTasksArray.push(this._sortedTasksArray[i])
