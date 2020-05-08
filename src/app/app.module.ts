@@ -7,10 +7,12 @@ import { AppComponent } from './app.component';
 import { MainComponent } from './app.main';
 import { DoneTasksComponent } from './app.doneTasks';
 import { NewTaskComponent } from './app.newTask';
+import { RegisterComponent } from './app.register';
 
 @NgModule({
   declarations: [
     AppComponent, MainComponent, DoneTasksComponent, NewTaskComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule, FormsModule, HttpClientModule, routing

@@ -47,8 +47,8 @@ export class MainComponent {
     getTime(_date) {
         let hour = _date.getHours();
         let min = _date.getMinutes();
-        let _time = hour*60 + min;
-        return _time
+        let _mins = hour*60 + min;
+        return _mins
     }
 
     getAllTasks() {
@@ -120,11 +120,25 @@ export class MainComponent {
                 alert(JSON.stringify(error));
             });
         location.reload();
-
-
     }
 
+    markTask() {
+        let url = "http://127.0.0.1:5000/markTask";
+        if(this.selectedTask.color == "red") {
+            this.selectedTask.color = null;
+        }
+        else if(this.selectedTask.color == null) {
+            this.selectedTask.color = "red"
+        }
 
-
+        this.http.post(url,this.selectedTask)
+        .subscribe(
+            (data) => {
+                // console.log(data)
+            },
+            error => {
+                alert(JSON.stringify(error));
+            });
+    }
 
 }
