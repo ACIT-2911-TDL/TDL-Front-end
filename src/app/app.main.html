@@ -24,7 +24,6 @@ TODAY TASKS
     <li *ngFor="let task of _overdueTasksArray" 
     (click)="onSelect(task)" class="gery">
     {{task.name}} 
-    <input type="button" (click)="completeTask()" value="DONE">
     <br>
     {{task.deadline | date:"medium"}}
     <div *ngIf="selectedTask===task">
@@ -57,7 +56,6 @@ WEEK TASKS
     <li *ngFor="let task of _weekTasksArray" 
     (click)="onSelect(task)" class="{{task.color}}">
     {{task.name}}
-    <input type="button" (click)="completeTask()" value="DONE" style="float:right">
     <br>
     {{task.deadline | date:"medium"}}
     <div *ngIf="selectedTask===task">
@@ -75,7 +73,6 @@ OTHER TASKS
     <li *ngFor="let task of _otherTasksArray" 
     (click)="onSelect(task)" class="{{task.color}}">
     {{task.name}}
-    <input type="button" (click)="completeTask()" value="DONE" style="float:right">
     <br>
     {{task.deadline | date:"medium"}}
     <div *ngIf="selectedTask===task">

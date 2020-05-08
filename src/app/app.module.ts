@@ -8,11 +8,12 @@ import { MainComponent } from './app.main';
 import { DoneTasksComponent } from './app.doneTasks';
 import { NewTaskComponent } from './app.newTask';
 import { RegisterComponent } from './app.register';
+import { LoginComponent } from './app.login';
 
 @NgModule({
   declarations: [
     AppComponent, MainComponent, DoneTasksComponent, NewTaskComponent,
-    RegisterComponent
+    RegisterComponent, LoginComponent
   ],
   imports: [
     BrowserModule, FormsModule, HttpClientModule, routing
