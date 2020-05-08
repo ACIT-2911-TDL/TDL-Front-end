@@ -10,6 +10,7 @@ ul li {
 
 </style>
 
+<<<<<<< Updated upstream
 ALL TASKS
 
 
@@ -18,6 +19,65 @@ ALL TASKS
     (click)="onSelect(task)">
     {{task.name}}<br>
     {{task.deadline | date:"yyyy-MM-LL HH:mm"}}
+=======
+TODAY TASKS
+
+<ul>
+    <li *ngFor="let task of _overdueTasksArray" 
+    (click)="onSelect(task)" class="gery">
+    {{task.name}} 
+    <br>
+    {{task.deadline | date:"medium"}}
+    <div *ngIf="selectedTask===task">
+        <br>Description: <br>
+        {{selectedTask.description}}<br><br>
+        <input type="button" (click)="completeTask()" value="DONE">
+        <input type="button" (click)="deleteTask()" value="DELETE" style="float:right">
+    </div>
+    </li>
+</ul>
+<ul>
+    <li *ngFor="let task of _todayTasksArray" 
+    (click)="onSelect(task)" class="{{task.color}}"> 
+    {{task.name}}
+    <br>
+    {{task.deadline | date:"medium"}}
+
+    <div *ngIf="selectedTask===task">
+        <br>Description: <br>
+        {{selectedTask.description}}<br><br>
+        <input type="button" (click)="completeTask()" value="DONE">
+        <input type="button" (click)="markTask()" value="HIGHLIGHT" style="margin-left:40px">
+        <input type="button" (click)="deleteTask()" value="DELETE" style="float:right">
+    </div>
+    </li>
+</ul>
+
+WEEK TASKS
+<ul>
+    <li *ngFor="let task of _weekTasksArray" 
+    (click)="onSelect(task)" class="{{task.color}}">
+    {{task.name}}
+    <br>
+    {{task.deadline | date:"medium"}}
+    <div *ngIf="selectedTask===task">
+        <br>Description: <br>
+        {{selectedTask.description}}<br><br>
+        <input type="button" (click)="completeTask()" value="DONE">
+        <input type="button" (click)="markTask()" value="HIGHLIGHT" style="margin-left:40px">
+        <input type="button" (click)="deleteTask()" value="DELETE" style="float:right">
+    </div>
+    </li>
+</ul>
+
+FURTHER TASKS
+<ul>
+    <li *ngFor="let task of _otherTasksArray" 
+    (click)="onSelect(task)" class="{{task.color}}">
+    {{task.name}}
+    <br>
+    {{task.deadline | date:"medium"}}
+>>>>>>> Stashed changes
     <div *ngIf="selectedTask===task">
         <br>Description: <br>
         {{selectedTask.description}}<br><br>
