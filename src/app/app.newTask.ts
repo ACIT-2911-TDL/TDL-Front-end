@@ -15,20 +15,13 @@ export class NewTaskComponent {
     _http: HttpClient;
     _errorMessage: String = "";
     _validation: String;
-    username: String;
  
 
 
     constructor(private http: HttpClient, private router: Router) {
         this._http = http;
-        this.updateLinks()
     }
 
-    updateLinks() {         
-        if(sessionStorage.getItem('username')) {
-            this.username = sessionStorage.getItem('username')
-        }
-    }
 
     createTask() {
         let now = new Date();
@@ -46,13 +39,12 @@ export class NewTaskComponent {
             this._errorMessage = 'Task deadline can not be empty.'
         }
         else {
-            let url = "http://localhost:1337/newTask";
-            console.log(this.username)
+            let url = "http://127.0.0.1:5000/newTask";
+            console.log(this.deadline)
             let newTask = {
                 "name": this.name,
                 "description": this.description,
-                "deadline": this.deadline,
-                "username": this.username
+                "deadline": this.deadline
             }
             this._http.post<any>(url, newTask)
             .subscribe(

@@ -1,86 +1,71 @@
 import { Component } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { ApiService } from './ApiService';
+import { HttpClient } from '@angular/common/http';
 import { Router } from "@angular/router";
-import { FormsModule } from '@angular/forms';
-import { ElementFinder } from 'protractor';
-
 
 
 
 @Component({
-    templateUrl:`app.register.html`
- 
+    templateUrl: './app.register.html'
 })
-
 export class RegisterComponent {
-    role:string = "";
-    firstName:string = "";
-    lastName:string = "";
-    email:string = "";
-    username:string = "";
-    password:string = "";
-    passwordConfirm:string = "";
-    errorMessage: string = "";
+    username: String;
+    firstName: String;
+    lastName: String;
+    email: String;
+    password: String;
+    passwordConfirm: String;
+    _http: HttpClient;
+    _errorMessage: String = "";
+ 
 
-    reqInfo:any = {};
-    _apiService:ApiService;
 
     constructor(private http: HttpClient, private router: Router) {
-        this._apiService = new ApiService(http, this);
+        this._http = http;
     }
-
 
 
     register() {
-        let url = 'http://localhost:1337/CreateUser';
-        let validEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.email);
-        let validPasswd = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,8}$/.test(this.password);
 
         if(!this.username) {
-            this.errorMessage = "Please enter a username."
-
+            this._errorMessage = 'Please enter your username.'
         }
+        else if(!this.password) {
+            this._errorMessage = "Please enter your password."
+        } 
         else if(!this.firstName) {
-            this.errorMessage = "Please enter your first name."
+            this._errorMessage = 'Please enter your first name.'
         }
         else if(!this.lastName) {
-            this.errorMessage = "Please enter your last name."
+            this._errorMessage = 'Please enter your last name.'
+        }        
+        else if(!this.email) {
+            this._errorMessage = 'Please enter your email address.'
         }
-        else if(!validEmail) {
-            this.errorMessage = "Email format is incorrect."
-        }
-        else if(!validPasswd) {
-            this.errorMessage = "Password must be 6 to 20 characters" + 
-            "which contain at least one numeric digit, one uppercase and one lowercase letter."
+        else if(this.password != this.passwordConfirm) {
+            this._errorMessage = "Invalided password input."
         }
         else {
-
-            this.http.post(url, {
-                firstName:    this.firstName,
-                lastName:     this.lastName,
-                email:        this.email,
-                username:     this.username,
-                password:      this.password,
-                passwordConfirm: this.passwordConfirm
-            })
+            let url = "http://127.0.0.1:5000/CreateUser";
+            let newTask = { 
+                "username": this.username,
+                "firstName": this.firstName,
+                "lastName": this.lastName,
+                "email": this.email,
+                "password": this.password
+            }
+            this._http.post<any>(url, newTask)
             .subscribe(
                 (data) => {
-                    this.errorMessage = data['errorMessage']['message']
-                    if(this.errorMessage){
-                        console.log(this.errorMessage)
-                    }
-                    else{
-                        alert("User registration is successful, please log in.")
-                        this.router.navigateByUrl('/login');
-    
-                    }    
+                    console.log(data)
+                    alert('New user registered successfully.')
+                    this.router.navigateByUrl('/main');
                 },
                 error => {
-                    alert(JSON.stringify(error));             
+                    this._errorMessage = error.error
                 });
-
         }
-        
+
     }
+
 }
+
